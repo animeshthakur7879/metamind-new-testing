@@ -1,0 +1,75 @@
+body {
+    background: linear-gradient(135deg, #000428, #004e92, #6a0572);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    position: relative;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s infinite ease-in-out;
+  }
+  
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .form-container {
+    background-color: rgba(31, 41, 55, 0.8); /* Dark gray with 70% opacity */
+    max-height: 90vh; /* Allow content to scroll if it exceeds the viewport */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 1rem; /* Add padding to prevent content from being cut off */
+  }
+  .star:nth-child(odd) {
+    animation-duration: 3s;
+  }
+  
+  .star:nth-child(even) {
+    animation-duration: 4s;
+  }
+  
+  .meta-mind-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 150px; /* Increased font size */
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+    text-transform: uppercase;
+    white-space: nowrap;
+    letter-spacing: 15px;
+    z-index: -1;
+  }
+
+  .form-container {
+    max-height: 90vh; /* Allow content to scroll if it exceeds the viewport */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 1rem; /* Add padding to prevent content from being cut off */
+  }
+  
+  /* Hide the scrollbar but keep scrolling functionality */
+  .form-container::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+  }
+  
+  .form-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5); /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+  }
+  
+  .form-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8); /* Color of the scrollbar thumb on hover */
+  }
