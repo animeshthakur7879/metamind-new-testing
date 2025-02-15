@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { UserContext } from "../UserContext";
 
 const ChatAssistant = (props) => {
+  const { user } = useContext(UserContext);
   // Use candidateId from props if available, otherwise from localStorage or URL, default "1"
-  const effectiveCandidateId = 
-    props.candidateId || 
-    localStorage.getItem('loggedInUserId') || 
-    new URLSearchParams(window.location.search).get('candidateId') || 
-    '1';
+  const effectiveCandidateId = user?.id || 
+  props.candidateId || 
+  new URLSearchParams(window.location.search).get('candidateId') || 
+  '1';
 
-  console.log("Effective candidateId:", effectiveCandidateId);
+console.log("Effective candidateId from context:", effectiveCandidateId);
 
   // Conversation state to manage the roadmap flow.
   const [conversation, setConversation] = useState({

@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { User, Badge, Code } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  User,
+  Badge,
+  Code,
+  Calendar
+} from 'lucide-react';
 
 const MetamindPassport = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isApproved, setIsApproved] = useState(false);
+  const [approvalChecked, setApprovalChecked] = useState(false);
   const [showGlow, setShowGlow] = useState(false);
+  const [passportData, setPassportData] = useState(null);
 
-  const studentData = {
-    name: "Rahul Kumar",
-    badges: 12,
-    skills: ["JavaScript", "React", "Node.js", "Python"],
-    openSourceProjects: 5,
-  };
-
+  // Toggle glow effect every 2 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setShowGlow(prev => !prev);
@@ -21,12 +22,64 @@ const MetamindPassport = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleVirtualWorld = () => {
-    setIsApproved(true);
+  // Fetch passport data from backend on mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      fetch("http://localhost:3000/passport", {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Accept": "application/json"
+        }
+      })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch passport data");
+        }
+        return res.json();
+      })
+      .then(data => {
+        setPassportData(data);
+        // Optionally update the approval state if the backend flag is set
+        if (data.isApproved) {
+          setIsApproved(true);
+        }
+      })
+      .catch(err => console.error(err));
+    }
+  }, []);
+
+  // Function to update approval status in the backend
+  const handleVirtualWorld = async () => {
+    const token = localStorage.getItem('token');
+    // Determine approval based on badges; here, approved if badges >= 10
+    const approved = passportData && passportData.badges >= 10;
+    try {
+      const response = await fetch("http://localhost:3000/passport/approve", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ approved })
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update passport status");
+      }
+      const data = await response.json();
+      setIsApproved(data.approved);
+      setApprovalChecked(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  // Fallback dynamic values
+  const displayName = passportData ? passportData.name : "Loading...";
+  const badgeCount = passportData ? passportData.badges : 0;
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex justify-center items-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 flex justify-center items-center p-4">
       <motion.button
         onClick={() => window.history.back()}
         className="fixed top-8 right-6 px-6 py-3 bg-gradient-to-r from-black to-blue-700 text-white rounded-lg shadow-lg hover:shadow-xl"
@@ -47,13 +100,11 @@ const MetamindPassport = () => {
               transition={{ duration: 0.5 }}
               className="bg-[#2B4570] shadow-2xl max-w-md mx-auto rounded-lg p-6 relative min-h-[600px]"
               style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.15' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E")`,
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.15' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E")`
               }}
             >
               <motion.div
-                className={`text-[#DAA520] text-4xl text-center font-bold mt-5 mb-20 tracking-[0.25em] font-serif ${
-                  showGlow ? 'animate-pulse' : ''
-                }`}
+                className={`text-[#DAA520] text-4xl text-center font-bold mt-5 mb-20 tracking-[0.25em] font-serif ${showGlow ? 'animate-pulse' : ''}`}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
@@ -101,18 +152,14 @@ const MetamindPassport = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 1.5 }}
                 >
-                  Metamind
+                  {displayName}
                 </motion.h1>
               </motion.div>
 
               <motion.button
                 onClick={() => setIsOpen(true)}
                 className="absolute bottom-4 right-4 bg-[#DAA520] text-[#2B4570] px-6 py-3 rounded-lg font-semibold shadow-lg"
-                whileHover={{ 
-                  scale: 1.05,
-                  backgroundColor: "#B8860B",
-                  boxShadow: "0 0 20px rgba(218, 165, 32, 0.5)"
-                }}
+                whileHover={{ scale: 1.05, backgroundColor: "#B8860B", boxShadow: "0 0 20px rgba(218, 165, 32, 0.5)" }}
                 whileTap={{ scale: 0.95 }}
               >
                 Open
@@ -184,7 +231,7 @@ const MetamindPassport = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
                   >
-                    {studentData.name}
+                    {displayName}
                   </motion.h2>
 
                   <motion.div
@@ -193,25 +240,21 @@ const MetamindPassport = () => {
                   >
                     <Badge className="w-6 h-6 text-[#DAA520]" />
                     <span className="font-semibold text-[#DAA520]">
-                      {studentData.badges} Badges Earned
+                      {passportData ? passportData.badges : 0} Badges Earned
                     </span>
                   </motion.div>
 
                   <motion.div className="space-y-3">
                     <h3 className="font-semibold text-center text-[#2B4570]">Skills</h3>
                     <div className="flex flex-wrap justify-center gap-2">
-                      {studentData.skills.map((skill, index) => (
+                      {passportData && passportData.skills && passportData.skills.map((skill, index) => (
                         <motion.span
-                          key={skill}
+                          key={index}
                           className="bg-[#2B4570] text-[#DAA520] px-4 py-2 rounded-full text-sm font-medium shadow-md"
                           initial={{ opacity: 0, scale: 0 }}
                           animate={{ opacity: 1, scale: 1 }}
                           transition={{ delay: index * 0.1 }}
-                          whileHover={{ 
-                            scale: 1.1,
-                            backgroundColor: "#1a2b44",
-                            boxShadow: "0 0 15px rgba(218, 165, 32, 0.3)"
-                          }}
+                          whileHover={{ scale: 1.1, backgroundColor: "#1a2b44", boxShadow: "0 0 15px rgba(218, 165, 32, 0.3)" }}
                         >
                           {skill}
                         </motion.span>
@@ -225,18 +268,16 @@ const MetamindPassport = () => {
                   >
                     <Code className="w-6 h-6 text-[#DAA520]" />
                     <span className="text-[#DAA520]">
-                      {studentData.openSourceProjects} Open Source Projects
+                      {passportData ? passportData.openSourceProjects : 0} Open Source Projects
                     </span>
                   </motion.div>
 
-                  {!isApproved ? (
+                  {/* Check Approval Button & Result */}
+                  {!approvalChecked ? (
                     <motion.button
                       onClick={handleVirtualWorld}
                       className="mt-4 bg-[#2B4570] text-[#DAA520] font-bold py-3 px-6 rounded-lg w-full shadow-lg relative overflow-hidden"
-                      whileHover={{ 
-                        scale: 1.02,
-                        boxShadow: "0 0 20px rgba(218, 165, 32, 0.3)"
-                      }}
+                      whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(218, 165, 32, 0.3)" }}
                       whileTap={{ scale: 0.98 }}
                     >
                       <motion.div
@@ -246,26 +287,46 @@ const MetamindPassport = () => {
                         transition={{ duration: 0.5 }}
                         style={{ opacity: 0.2 }}
                       />
-                      Enter Virtual World
+                      Check Approval
                     </motion.button>
                   ) : (
-                    <motion.div
-                      className="relative mt-4"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", stiffness: 200 }}
-                    >
-                      <div className="border-8 border-[#DAA520] rounded-lg p-4 text-[#DAA520] font-bold text-xl text-center font-serif backdrop-blur-sm">
-                        <motion.div
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: [0, 1, 0] }}
-                          transition={{ duration: 2, repeat: Infinity }}
-                          className="absolute inset-0 bg-[#DAA520]"
-                          style={{ opacity: 0.1 }}
-                        />
-                        APPROVED
-                      </div>
-                    </motion.div>
+                    passportData && passportData.badges < 10 ? (
+                      <motion.div
+                        className="relative mt-4"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 200 }}
+                      >
+                        <div className="border-8 border-red-500 rounded-lg p-4 text-red-500 font-bold text-xl text-center font-serif backdrop-blur-sm">
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: [0, 1, 0] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="absolute inset-0 bg-red-500"
+                            style={{ opacity: 0.1 }}
+                          />
+                          NOT APPROVED
+                        </div>
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        className="relative mt-4"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ type: "spring", stiffness: 200 }}
+                      >
+                        <div className="border-8 border-[#DAA520] rounded-lg p-4 text-[#DAA520] font-bold text-xl text-center font-serif backdrop-blur-sm">
+                          <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: [0, 1, 0] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="absolute inset-0 bg-[#DAA520]"
+                            style={{ opacity: 0.1 }}
+                          />
+                          APPROVED
+                        </div>
+                      </motion.div>
+                    )
                   )}
                 </div>
               </motion.div>

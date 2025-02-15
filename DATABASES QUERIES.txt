@@ -1,0 +1,103 @@
+DATABASES QUERIES : 
+
+1. Users Table
+This table stores the basic user authentication and profile information.
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  fullName VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  category VARCHAR(50) NOT NULL,
+  about TEXT
+);
+
+2. Profiles Table
+This table stores extended profile details for each user in a one-to-one relationship with the users table.
+
+CREATE TABLE IF NOT EXISTS profiles (
+  user_id INT PRIMARY KEY,
+  dob DATE,
+  gender VARCHAR(50),
+  phone VARCHAR(20),
+  street VARCHAR(255),
+  city VARCHAR(100),
+  state VARCHAR(100),
+  country VARCHAR(100),
+  zip VARCHAR(20),
+  educationLevel VARCHAR(50),
+  fieldOfStudy VARCHAR(100),
+  institution VARCHAR(255),
+  dreamJob VARCHAR(100),
+  dreamCompany VARCHAR(100),
+  shortTermGoals TEXT,
+  longTermGoals TEXT,
+  strengths TEXT,
+  strengthsText TEXT,
+  weaknesses TEXT,
+  hobbies TEXT,
+  interests TEXT,
+  bio TEXT,
+  resume VARCHAR(255),
+  profilePicture VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+
+3. User Progress Table
+This table tracks each user's credits, badges, and enrolled courses.
+
+CREATE TABLE IF NOT EXISTS user_progress (
+  user_id INT PRIMARY KEY,
+  credits INT DEFAULT 100,
+  badges INT DEFAULT 0,
+  enrolled_courses VARCHAR(255) DEFAULT '',
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+
+4. Results Table
+This table stores results or assessments for each user in a one-to-one relationship with the users table.
+
+CREATE TABLE IF NOT EXISTS results (
+  user_id INT PRIMARY KEY,
+  candidate_name VARCHAR(255) NOT NULL,
+  domain VARCHAR(255) NOT NULL,
+  scores JSON NOT NULL,
+  overall_score INT NOT NULL,
+  feedback JSON NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+5. Submitted Projects Table
+This table stores projects submitted by industry users. Each project is linked to the user who submitted it.
+
+CREATE TABLE IF NOT EXISTS submitted_projects (
+  project_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT NOT NULL,
+  projectName VARCHAR(255) NOT NULL,
+  industryType VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  category VARCHAR(255) NOT NULL,
+  deliverables TEXT,
+  techStack TEXT,
+  deadline DATE,
+  budgetRange VARCHAR(255),
+  companyName VARCHAR(255),
+  website VARCHAR(255),
+  contactEmail VARCHAR(255),
+  additionalNotes TEXT,
+  submission_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+6. Chat Logs Table
+This table stores chat logs for each user in a one-to-one relationship with the users table.
+
+CREATE TABLE IF NOT EXISTS chat_logs (
+  user_id INT PRIMARY KEY,
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);

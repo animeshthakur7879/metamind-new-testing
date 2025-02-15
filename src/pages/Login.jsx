@@ -27,6 +27,8 @@ const LoginPage = () => {
 
       // Save the token for subsequent requests.
       localStorage.setItem("token", data.token);
+      
+      
 
       alert("Logged in successfully!");
 
