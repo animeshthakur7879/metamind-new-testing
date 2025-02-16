@@ -30,7 +30,7 @@ const FinalCTASection = () => {
         {/* CTA Button */}
         <div className="mt-12">
           <a 
-            href="/join"
+            href="/signup"
             className="relative inline-block px-10 py-4 font-bold text-white uppercase tracking-wider rounded-full overflow-hidden group transition-transform duration-500 transform hover:scale-110"
           >
             {/* Animated Gradient Background */}

@@ -1,12 +1,14 @@
 // IndustryWelcome.jsx
 import React, { useState, useEffect } from 'react';
 import SubmitProjectFormModal from './SubmitProjectFormModal';
+import { useNavigate } from 'react-router-dom';
 
 const IndustryWelcome = () => {
   const [showContent, setShowContent] = useState(false);
   const [feedbacks, setFeedbacks] = useState([]);
   const [hoverCard, setHoverCard] = useState(null);
   const [showFormModal, setShowFormModal] = useState(false);
+  const navigate = useNavigate()
 
   const newFeedbacks = [
     { id: 1, text: "MetaMind's virtual world platform helped us create an immersive training environment for our new employees.", author: "Sarah Chen", company: "Microsoft" },
@@ -72,11 +74,17 @@ const IndustryWelcome = () => {
         ))}
       </div>
 
-      {/* Enhanced Logo */}
-      <div className="absolute top-6 left-6 z-10">
+      {/* Enhanced Logo and Home Button */}
+      <div className="absolute top-6 left-6 z-10 flex flex-col space-y-4">
         <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-pulse">
           MetaMind
         </div>
+        <button 
+          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg transition-all hover:shadow-lg hover:shadow-blue-500/50 hover:scale-105"
+          onClick={() => navigate('/industryhome')}
+        >
+          Home
+        </button>
       </div>
 
       {/* Main Content */}
@@ -122,14 +130,18 @@ const IndustryWelcome = () => {
             onMouseEnter={() => setHoverCard(2)}
             onMouseLeave={() => setHoverCard(null)}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg opacity-0 transition-opacity duration-300 hover:opacity-100" />
+            {/* Added pointer-events-none so this overlay does not block clicks */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-lg opacity-0 transition-opacity duration-300 hover:opacity-100" />
             <h2 className="text-2xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
               Create Your Own Virtual Room
             </h2>
             <p className="text-gray-300">
               Take control of your virtual experience. Use our powerful tools and intuitive interface to build your perfect virtual environment from scratch.
             </p>
-            <button className="mt-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg transition-all hover:shadow-lg hover:shadow-purple-500/50 hover:scale-105">
+            <button 
+              onClick={() => navigate('/vroom')}
+              className="mt-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-lg transition-all hover:shadow-lg hover:shadow-purple-500/50 hover:scale-105"
+            >
               Start Creating
             </button>
           </div>

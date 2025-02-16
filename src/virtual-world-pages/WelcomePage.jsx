@@ -84,8 +84,8 @@ const WelcomePage = () => {
       {showContent && (
         <>
           {/* Enhanced Header with Sparkles */}
-          <div className="text-center mb-12 animate-fadeInDown relative">
-            <h1 className="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 relative">
+          <div className="text-center mb-12 mt-10 animate-fadeInDown relative">
+            <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 relative">
               Welcome to Metamind's Virtual World
               <Sparkles className="absolute -top-8 -right-8 w-6 h-6 text-yellow-400 animate-sparkle" />
               <Stars className="absolute -bottom-8 -left-8 w-6 h-6 text-purple-400 animate-sparkle-delayed" />

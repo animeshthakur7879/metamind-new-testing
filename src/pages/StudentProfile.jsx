@@ -143,7 +143,7 @@ const StudentProfile = () => {
             
             <div className="flex items-center gap-2 md:gap-3">
               <div className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-[#FFC3B2]">
-                <img src="/api/placeholder/40/40" alt="Profile" className="w-full h-full rounded-full" />
+                <img src="https://tse3.mm.bing.net/th?id=OIP.--sB_AG8cxvPbn4tFQU4YAHaJ4&pid=Api&P=0&h=180" alt="Profile" className="w-full h-full rounded-full" />
               </div>
               <svg className="w-4 h-4 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M6 9l6 6 6-6"></path>

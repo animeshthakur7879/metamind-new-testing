@@ -34,7 +34,7 @@ const HeroSection = () => {
       
       {/* Get Started Button */}
       <a 
-        href="#signup" 
+        href="/signup" 
         className="relative inline-block group py-3 px-6 rounded-full overflow-hidden transition-all duration-300"
       >
         {/* Animated Glowing Gradient Background */}

@@ -6,6 +6,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { Clock, Award, DollarSign } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { FaBookReader } from "react-icons/fa";
 
 const StudentDashboard = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -85,7 +86,7 @@ const StudentDashboard = () => {
       description: "Take a self-assessment to gauge your readiness.",
       gradient: "bg-gradient-to-tr from-purple-500 to-indigo-700",
       button: "Access Yourself",
-      path: "/assesmentportal"
+      path: "/index"
     },
     {
       title: "Real World Case Study",
@@ -309,6 +310,31 @@ const StudentDashboard = () => {
                   </div>
                 </div>
               </motion.div>
+              <motion.div
+      whileHover={{ scale: 1.02 }}
+      className="bg-white p-6 rounded-xl shadow-lg transform transition-all duration-300"
+    >
+      <div className="flex items-center mb-4">
+        <FaBookReader className="w-6 h-6 text-blue-500 mr-2" />
+        <h3 className="font-bold text-gray-800">Notes</h3>
+      </div>
+      <div className="space-y-2">
+        <p className="text-gray-700">
+          Clicking here will open the notes section where you can write and save your notes.
+        </p>
+        <div className="flex justify-center">
+          <button
+            className="bg-blue-500 px-3 py-2 text-white mt-3 rounded-md"
+            onClick={() => navigate("/notes")}
+          >
+            Click Here
+          </button>
+        </div>
+      </div>
+    </motion.div>
+
+              
+              
             </div>
           </div>
 
@@ -358,35 +384,74 @@ const StudentDashboard = () => {
 
             {/* Progress Graph */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="bg-white p-4 md:p-6 rounded-xl shadow-sm"
-            >
-              <h3 className="text-lg font-semibold mb-4">Learning Progress</h3>
-              <div className="relative h-[200px] md:h-[300px]">
-                {/* Graph Grid Lines */}
-                {[0, 1, 2, 3, 4].map((line) => (
-                  <div
-                    key={line}
-                    className="absolute w-full h-px bg-gray-100"
-                    style={{ top: `${line * 25}%` }}
-                  />
-                ))}
-                
-                {/* Month Labels */}
-                <div className="absolute bottom-0 left-0 w-full flex justify-between text-gray-400 text-xs md:text-sm">
-                  {['Aug', 'Sept', 'Oct', 'Nov', 'Dec', 'Jan'].map((month) => (
-                    <span key={month}>{month}</span>
-                  ))}
-                </div>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, delay: 0.6 }}
+  className="bg-white p-4 md:p-6 rounded-xl shadow-sm"
+>
+  <h3 className="text-lg font-semibold mb-4">Learning Progress</h3>
+  <div className="relative h-[200px] md:h-[300px]">
+    {/* Graph Grid Lines */}
+    {[0, 1, 2, 3, 4].map((line) => (
+      <div
+        key={line}
+        className="absolute w-full h-px bg-gray-100"
+        style={{ top: `${line * 25}%` }}
+      />
+    ))}
 
-                {/* Placeholder for actual graph visualization */}
-                <div className="absolute inset-0 mt-4 mb-6">
-                  <div className="h-full bg-gradient-to-b from-indigo-50 to-transparent rounded-lg" />
-                </div>
-              </div>
-            </motion.div>
+    {/* Month Labels */}
+    <div className="absolute bottom-0 left-0 w-full flex justify-between text-gray-400 text-xs md:text-sm">
+      {['Aug', 'Sept', 'Oct', 'Nov', 'Dec', 'Jan'].map((month) => (
+        <span key={month}>{month}</span>
+      ))}
+    </div>
+
+    {/* Graph Visualization */}
+    <div className="absolute inset-0 mt-4 mb-6">
+      <svg
+        className="w-full h-full"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        {/* Define a gradient for the fill area */}
+        <defs>
+          <linearGradient id="line-gradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#6366F1" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#6366F1" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* Area under the line chart */}
+        <path 
+          d="M0,100 L0,70 L20,60 L40,80 L60,50 L80,65 L100,40 L100,100 Z" 
+          fill="url(#line-gradient)" 
+        />
+
+        {/* The line chart connecting the data points */}
+        <polyline 
+          fill="none" 
+          stroke="#4F46E5" 
+          strokeWidth="2" 
+          points="0,70 20,60 40,80 60,50 80,65 100,40" 
+        />
+
+        {/* Data points */}
+        {[
+          { x: 0, y: 70 },
+          { x: 20, y: 60 },
+          { x: 40, y: 80 },
+          { x: 60, y: 50 },
+          { x: 80, y: 65 },
+          { x: 100, y: 40 }
+        ].map((point, idx) => (
+          <circle key={idx} cx={point.x} cy={point.y} r="1.5" fill="#4F46E5" />
+        ))}
+      </svg>
+    </div>
+  </div>
+</motion.div>
+
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 const slides = [
   {
-    image: 'https://via.placeholder.com/600x400?text=Slide+1',
+    image: './public/meta mind no bg.png',
     title: "About Meta Mind",
     description: "At Meta Mind, we are dedicated to bridging the gap between academic knowledge and real-world industry demands. Our platform empowers students by offering immersive virtual experiences, enabling them to gain hands-on experience long before they graduate. We combine innovative technology, personalized assessments, and real-world projects to build a comprehensive learning ecosystem that transforms theory into practical skills",
   },

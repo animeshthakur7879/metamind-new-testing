@@ -128,7 +128,7 @@ const SubmitProjectPage = () => {
         <div className="bg-gradient-to-br from-gray-900/50 to-blue-600/50 backdrop-blur-sm rounded-lg shadow-lg p-8 max-w-3xl w-full my-12 mx-auto">
           {/* Back Button */}
           <button
-            onClick={(e) => navigate('/industrywelcome')}
+            onClick={() => navigate(-1)}
             className="text-white text-sm font-medium mb-4 hover:underline"
           >
             ← Back

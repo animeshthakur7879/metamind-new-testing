@@ -101,3 +101,33 @@ CREATE TABLE IF NOT EXISTS chat_logs (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+7.Results Table
+
+CREATE TABLE results (
+  id INT NOT NULL AUTO_INCREMENT,
+  candidate_name VARCHAR(255) NOT NULL,
+  domain VARCHAR(255) NOT NULL,
+  scores TEXT NOT NULL,
+  overall_score INT NOT NULL,
+  feedback TEXT NOT NULL,
+  created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+8.roadmaps Table
+
+CREATE TABLE roadmaps (
+  id INT NOT NULL AUTO_INCREMENT,
+  candidate_id INT NOT NULL,
+  duration INT NOT NULL,
+  course_type VARCHAR(50) NOT NULL,
+  custom_instructions TEXT DEFAULT NULL,
+  plain_roadmap TEXT NOT NULL,
+  formatted_roadmap TEXT NOT NULL,
+  created_at DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  KEY candidate_id (candidate_id),
+  CONSTRAINT fk_candidate_id FOREIGN KEY (candidate_id) REFERENCES results(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

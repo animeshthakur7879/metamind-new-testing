@@ -211,12 +211,9 @@ const StudentSchedulePage = () => {
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
                     <Bell size={16} className="text-purple-500" />
-                    <span className="text-sm">Submit Math assignment</span>
+                    <span className="text-sm">Web Development Week 3 started</span>
                   </li>
-                  <li className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
-                    <Bell size={16} className="text-purple-500" />
-                    <span className="text-sm">Prepare lab session notes</span>
-                  </li>
+                  
                 </ul>
               </div>
             </div>

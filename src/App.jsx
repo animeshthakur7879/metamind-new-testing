@@ -33,11 +33,20 @@ import BuildingPage from './virtual-world-pages/BuildingPage.jsx';
 import IndustryWelcome from './Industry Pages/IndustryWelcome.jsx';
 import SubmitProjectFormModal from './Industry Pages/SubmitProjectFormModal.jsx';
 import ChatAssistant from './pages/ChatAssistant.jsx';
-import AssesmentPortal from './assessment/AssesmentPortal.jsx';
-import RoadmapGenerator from './assessment/RoadmapGenerator.jsx';
+import AssesmentPortal from './assessment/Index.jsx';
+import RoadmapGenerator from './assessment/Roadmap.jsx';
 import TermsAndConditions from './assessment/TermsConditions.jsx';
-import DynamicTest from './assessment/DynamicTest.jsx';
-import TestResults from './assessment/TestResults.jsx';
+import DynamicTest from './assessment/Test.jsx';
+import TestResults from './assessment/Result.jsx';
+import Index from './assessment/Index.jsx';
+import Test from './assessment/Test.jsx';
+import Result from './assessment/Result.jsx';
+import Roadmap from './assessment/Roadmap.jsx';
+import Notes from './pages/Notes.jsx';
+import VRoom from './Industry Pages/VRoom.jsx';
+import ContactUs from './Industry Pages/ContactUs.jsx';
+import ProjectReport from './Industry Pages/Reports.jsx';
+import AiInterview from './virtual-world-pages/AiInterview.jsx';
 const App = () => {
   useEffect(() => {
     AOS.init({
@@ -78,11 +87,16 @@ const App = () => {
         <Route path="/industrywelcome" element={<IndustryWelcome/>} />
         <Route path="/submitprojectform" element={<SubmitProjectFormModal/>} />
         <Route path="/chatassistant" element={<ChatAssistant/>} />
-        <Route path="/assesmentportal" element={<AssesmentPortal/>} />
-        <Route path="/roadmapgenerator" element={<RoadmapGenerator/>} />
+        <Route path="/index" element={<Index/>} />
+        <Route path="/roadmap" element={<Roadmap/>} />
         <Route path="/termsconditions" element={<TermsAndConditions/>} />
-        <Route path="/testresult" element={<TestResults/>} />
-        <Route path="/dynamictest" element={<DynamicTest/>} />
+        <Route path="/results" element={<Result/>} />
+        <Route path="/test" element={<Test/>} />
+        <Route path="/notes" element={<Notes/>} />
+        <Route path="/vroom" element={<VRoom/>} />
+        <Route path="/contactus" element={<ContactUs/>} />
+        <Route path="/report" element={<ProjectReport/>} />
+        <Route path="aiinterview" element={<AiInterview/>} />
 
     </Routes>
     </StudentProvider>

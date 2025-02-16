@@ -12,24 +12,24 @@ const BuildingPage = () => {
 
     const buildings = {
         building1: {
-            name: "Tech Innovation Hub",
-            description: "Where Future Begins",
+            name: "Tesla",
+            description: "Automobile Company",
             src: "image-removebg-preview (8).png",
             position: "left-[10%]"
         },
         building2: {
-            name: "Digital Nexus",
-            description: "Connected Future",
+            name: "47Billion",
+            description: "IT Company",
             src: "image-removebg-preview (7).png",
             position: "left-[40%]"
         },
         building3: {
-            name: "Cyber Tower",
-            description: "Virtual Excellence",
+            name: "Amazon",
+            description: "E-commerce Comapany",
             src: "image-removebg-preview (6).png",
             position: "left-[75%]"
-        }
-    };
+        }
+    };
 
     return (
         <div className="background flex items-center justify-center min-h-screen">
@@ -45,7 +45,7 @@ const BuildingPage = () => {
 
             {/* Enhanced Title with Animation */}
             <motion.h1 
-                className="gradient-text absolute top-5 left-1/2 transform -translate-x-1/2"
+                className=" bg-gradient-to-tr from-blue-500 text-6xl font-bold mt-10 to-purple-500 bg-clip-text text-transparent absolute top-5 left-1/2 transform -translate-x-1/2"
                 initial={{ y: -50, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ 
@@ -56,7 +56,7 @@ const BuildingPage = () => {
             >
                 Virtual World
                 <motion.div 
-                    className="text-blue-300 text-xl text-center mt-2"
+                    className="text-blue-300 mt-6 text-xl text-center mt-2"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.5 }}

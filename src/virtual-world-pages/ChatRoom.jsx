@@ -54,7 +54,7 @@ const ChatRoom = () => {
    <div className="fixed top-0 left-0 w-full bg-gray-800 px-6 py-4 flex justify-between items-center shadow-md z-10">
   <h1 className="text-xl font-semibold">Chat Room</h1>
   <button
-    onClick={() => navigate("/virtualdashboard")}
+    onClick={() => navigate(-1)}
     className="flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-500 mr-4"
   >
     <FaArrowLeft size={20} />
